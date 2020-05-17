@@ -2,6 +2,7 @@ package com.tk64.mooncraft;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -31,4 +32,13 @@ public class PlayerId {
     return idPaper;
   }
 
+  public static void givePapers(Player player) {
+    ItemStack idPaper = PlayerId.createPlayerIdPaper(player);
+
+    // try to add Id Papers to player inventory; if not, then drop at feet
+    Map<Integer, ItemStack> rejectedItems = player.getInventory().addItem(idPaper);
+    if (!rejectedItems.isEmpty()) {
+      player.getWorld().dropItem(player.getLocation().add(0, 1, 0), idPaper);
+    }
+  }
 }
